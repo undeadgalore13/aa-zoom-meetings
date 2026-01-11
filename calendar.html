@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meeting Calendar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Meeting Calendar</h1>
+  <button id="track-meeting-btn">Track Meeting</button>
+  <div id="calendar"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden">
+    <div id="modal-content">
+      <span id="close">&times;</span>
+      <h3 id="modal-date"></h3>
+      <ul id="meeting-day-list"></ul>
+      <select id="meeting-select"></select>
+      <button id="add-meeting">+</button>
+    </div>
+  </div>
+
+  <script src="jsmain.js"></script>
+</body>
+</html>
