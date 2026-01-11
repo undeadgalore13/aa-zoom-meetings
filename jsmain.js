@@ -1,6 +1,8 @@
-const meetings = {}; // { "2026-01-11": [ {name, time, type} ] }
+// Object to store meetings
+const meetings = {}; // Format: { "2026-01-11": [ {name, time, type} ] }
 
-const calendar = document.getElementById("calendar");
+// References to DOM
+const calendarContainer = document.getElementById("calendar");
 const modal = document.getElementById("modal");
 const modalDate = document.getElementById("modal-date");
 const meetingDayList = document.getElementById("meeting-day-list");
@@ -23,22 +25,43 @@ meetingOptions.forEach(m => {
   meetingSelect.appendChild(opt);
 });
 
-// Generate calendar for Dec 2025 → Dec 2026
-function generateCalendar() {
-  const start = new Date(2025, 11, 1); // Dec 2025
-  const end = new Date(2026, 11, 31);  // Dec 2026
-  let current = new Date(start);
+// Generate full year calendar (Dec 2025 → Dec 2026)
+function generateYearCalendar() {
+  const months = [
+    "December 2025","January 2026","February 2026","March 2026",
+    "April 2026","May 2026","June 2026","July 2026",
+    "August 2026","September 2026","October 2026","November 2026","December 2026"
+  ];
 
-  while (current <= end) {
-    const day = document.createElement("div");
-    const dateStr = current.toISOString().split("T")[0];
-    day.className = "day";
-    day.id = `day-${dateStr}`;
-    day.textContent = current.getDate();
-    day.addEventListener("click", () => openModal(dateStr));
-    calendar.appendChild(day);
-    current.setDate(current.getDate() + 1);
-  }
+  months.forEach((monthName, idx) => {
+    const monthDiv = document.createElement("div");
+    monthDiv.className = "month";
+
+    const monthTitle = document.createElement("h3");
+    monthTitle.textContent = monthName;
+    monthDiv.appendChild(monthTitle);
+
+    const monthGrid = document.createElement("div");
+    monthGrid.className = "month-grid";
+
+    const year = idx === 0 ? 2025 : 2026;
+    const monthNum = idx === 0 ? 11 : idx - 1; // December 2025 = 11, Jan 2026 = 0
+
+    const daysInMonth = new Date(year, monthNum + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayDiv = document.createElement("div");
+      const dateStr = `${year}-${String(monthNum+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      dayDiv.className = "day";
+      dayDiv.id = `day-${dateStr}`;
+      dayDiv.textContent = day;
+      dayDiv.addEventListener("click", () => openModal(dateStr));
+      monthGrid.appendChild(dayDiv);
+    }
+
+    monthDiv.appendChild(monthGrid);
+    calendarContainer.appendChild(monthDiv);
+  });
 }
 
 // Open modal for a date
@@ -50,7 +73,7 @@ function openModal(dateStr) {
   updateMeetingList();
 }
 
-// Update list in modal
+// Update modal list
 function updateMeetingList() {
   meetingDayList.innerHTML = "";
   const dayMeetings = meetings[currentDate] || [];
@@ -62,7 +85,7 @@ function updateMeetingList() {
   updateDateColor(currentDate);
 }
 
-// Add meeting
+// Add meeting to a date
 addMeetingBtn.addEventListener("click", () => {
   const selected = meetingOptions.find(m => m.name === meetingSelect.value);
   if (!meetings[currentDate]) meetings[currentDate] = [];
@@ -73,11 +96,11 @@ addMeetingBtn.addEventListener("click", () => {
 // Close modal
 closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
-// Update calendar date color
+// Update day color based on number of meetings
 function updateDateColor(date) {
   const count = meetings[date]?.length || 0;
   const dayDiv = document.getElementById(`day-${date}`);
-  let color = "white";
+  let color = "#fff";
   switch(count) {
     case 1: color = "red"; break;
     case 2: color = "blue"; break;
@@ -87,4 +110,4 @@ function updateDateColor(date) {
   dayDiv.style.backgroundColor = color;
 }
 
-generateCalendar();
+generateYearCalendar();
