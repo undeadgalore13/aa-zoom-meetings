@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoom AA Meetings</title>
+<style>
+/* Default Dark Mode */
+body {
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  background: #121212;
+  color: #e0e0e0;
+}
+.meeting-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.meeting-card h2 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+p {
+  margin: 6px 0;
+}
+.copy {
+  cursor: pointer;
+  color: #4fc3f7;
+  font-weight: bold;
+}
+.join-btn {
+  display: block;
+  margin-top: 12px;
+  padding: 12px;
+  text-align: center;
+  background: #4fc3f7;
+  color: #121212;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.camera {
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+/* Camera colors */
+.always-on { background: #ff8a80; color: #121212; }
+.verification { background: #fff176; color: #121212; }
+.no { background: #80deea; color: #121212; }
+.na { background: #bdbdbd; color: #121212; }
+
+/* Light Mode */
+body.light {
+  background: #f9f9f9;
+  color: #121212;
+}
+body.light .meeting-card {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+body.light .copy {
+  color: #007aff;
+}
+body.light .join-btn {
+  background: #007aff;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<script>
+// Copy to clipboard
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+  alert("Copied: " + text);
+}
+
+// Dark/Light Mode toggle
+function toggleMode() {
+  document.body.classList.toggle('light');
+}
+</script>
+
+<!-- Toggle Button -->
+<button onclick="toggleMode()" style="margin-bottom:20px; padding:10px; border:none; border-radius:8px; cursor:pointer; background:#4fc3f7; color:#121212; font-weight:bold;">
+  Toggle Light Mode
+</button>
+
+<!-- Meeting Cards -->
+
+<div class="meeting-card">
+  <h2>AA Last Call</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 12:30 AM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('8305556485')">830-555-6485 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('iloveAA')">iloveAA 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera verification">Verification</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/8305556485" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>Alcoholics 101: Broken Elevator</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 9:00 AM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('5954120079')">595-412-0079 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('024830')">024830 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/5954120079?pwd=YUdXRTV2Wml3MjV5QXBlVjNnVGJ0QT09" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>Hope Group Online</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 12:30 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('88560078850')">885-6007-8850 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('8675309')">8675309 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera no">No</span></p>
+  <a class="join-btn" href="https://us02web.zoom.us/j/88560078850?pwd=RmRTVHptWkVMZkFQVHZ2eURucGhJQT09" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>Alcoholics 101: Broken Elevator</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 1:30 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('5954120079')">595-412-0079 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('024830')">024830 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/5954120079?pwd=YUdXRTV2Wml3MjV5QXBlVjNnVGJ0QT09" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>AA Workshop</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 2:00 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('?')">? 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('ODAAT')">ODAAT 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/3138649365" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>46th Street Global Beginners</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 6:30 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('89260671032')">892-6067-1032 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('clubhouse')">clubhouse 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/89260671032?pwd=7d4EH3UpGiOazUq0tWbdONLS9NE3kA.1" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>Go To Any Lengths</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 7:30 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('85387756917')">853-8775-6917 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('None')">None 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera always-on">Always</span></p>
+  <a class="join-btn" href="https://us02web.zoom.us/j/85387756917" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>Alcoholics 101: Broken Elevator</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 9:00 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('5954120079')">595-412-0079 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('024830')">024830 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us06web.zoom.us/j/5954120079?pwd=YUdXRTV2Wml3MjV5QXBlVjNnVGJ0QT09" target="_blank">Join Zoom Meeting</a>
+</div>
+
+<div class="meeting-card">
+  <h2>AA After Hours</h2>
+  <p><strong>Meeting Days:</strong> </p>
+  <p><strong>Time:</strong> 10:00 PM EST</p>
+  <p><strong>Zoom ID:</strong> <span class="copy" onclick="copyText('N/A')">N/A 📋</span></p>
+  <p><strong>Passcode:</strong> <span class="copy" onclick="copyText('123456')">123456 📋</span></p>
+  <p><strong>Camera Required:</strong> <span class="camera na">N/A</span></p>
+  <a class="join-btn" href="https://us02web.zoom.us/j/2478907316" target="_blank">Join Zoom Meeting</a>
+</div>
+
+</body>
+</html>
