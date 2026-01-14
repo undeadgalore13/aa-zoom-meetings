@@ -71,6 +71,27 @@ body.light .join-btn {
   color: white;
 }
 
+/* ===== Light Mode Sidebar ===== */
+body.light .side-menu {
+  background: #ffffff;
+  color: #121212;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+}
+
+body.light .side-menu a {
+  color: #007aff;
+  border-bottom: 1px solid #ddd;
+}
+
+body.light .side-menu a:hover {
+  text-decoration: underline;
+}
+
+/* Light overlay */
+body.light .menu-overlay {
+  background: rgba(0,0,0,0.3);
+}
+
 /* Dropdown animation */
 .dropdown {
   max-height: 0;
@@ -108,10 +129,105 @@ body.light .join-btn {
   font-size: 0.95em;
   opacity: 0.9;
 }
+
+/* ===== Side Menu ===== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hamburger {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background: #4fc3f7;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hamburger span {
+  width: 22px;
+  height: 3px;
+  background: #121212;
+  margin: 3px 0;
+  border-radius: 2px;
+}
+
+/* Side menu panel */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: #1e1e1e;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+  transform: translateX(-100%); /* FULLY hidden */
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.side-menu a {
+  display: block;
+  padding: 10px 0;
+  color: #4fc3f7;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+.side-menu a:hover {
+  text-decoration: underline;
+}
+
+/* Overlay */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 999;
+}
+
+.menu-overlay.show {
+  display: block;
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <h3>Menu</h3>
+  <a href="#">AA Preamble</a>
+  <a href="#">How It Works</a>
+  <a href="#">The Twelve Traditions</a>
+  <a href="#">The Promises</a>
+  <a href="#">The Twelve Steps</a>
+  <a href="#">The Big Book</a>
+  <a href="#">Recommended Apps</a>
+  <a href="#">Meeting Tracker</a>
+</div>
+
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
 
 <script>
 function copyText(text) {
@@ -120,18 +236,50 @@ function copyText(text) {
 }
 function toggleMode() {
   document.body.classList.toggle('light');
+
+  const btn = document.getElementById('modeToggleBtn');
+
+  if (document.body.classList.contains('light')) {
+    btn.textContent = 'Toggle Dark Mode';
+  } else {
+    btn.textContent = 'Toggle Light Mode';
+  }
 }
+
 function toggleDesc(el) {
   el.closest('.meeting-card').classList.toggle('open');
+}
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+  alert("Copied: " + text);
+}
+
+function toggleDesc(el) {
+  el.closest('.meeting-card').classList.toggle('open');
+}
+
+/* Side menu toggle */
+function toggleMenu() {
+  document.getElementById('sideMenu').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('show');
 }
 </script>
 
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="shortcut icon" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-<button onclick="toggleMode()" style="margin-bottom:20px; padding:10px; border:none; border-radius:8px; cursor:pointer; background:#4fc3f7; color:#121212; font-weight:bold;">
-  Toggle Light Mode
-</button>
+<div class="top-bar">
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+	<button id="modeToggleBtn" onclick="toggleMode()" style="padding:10px; border:none; border-radius:8px; cursor:pointer; background:#4fc3f7; color:#121212; font-weight:bold;">
+	Toggle Light Mode
+	</button>
+</div>
+
 <!-- Intro -->
 
 
@@ -144,14 +292,14 @@ function toggleDesc(el) {
   <div class="dropdown">
     <div class="group-desc">
 		<b><i>
-		<p>Thank you for finding the time to visit here. This page stands as a collective of meetings that i have went to personally that i have found helpful.
+		<p>Thank you for finding the time to visit here. This page stands as a collective of meetings that I have went to personally that I have found helpful.
 		Every listing has been curated to help anyone, no matter what time it is, be able to find a very supportive group to get through the hard times.
 		Regardless if it is 2AM or 5PM there is someone else out there like you doing there best to get through the hard times!</p>
 		<br>
 		<p>Eventually there will be 48 meetings listed. 30 mins intervals.</p>
 		<p>We are in this together! PLEASE, DONT FORGET YOU ARE NOT ALONE THROUGH SOBERITY!!</p>
 		<br>
-		<p>This Page will be constantly Evolving as i add new feature and listings. If at any point you have any reccommendations of things to add or if you find a timeslot that is not filled feel free to send me an email at tnew122625aa@gmail.com with details.</p>
+		<p>This Page will be constantly Evolving as I add new feature and listings. If at any point you have any reccommendations of things to add or if you find a timeslot that is not filled feel free to send me an email at tnew122625aa@gmail.com with details.</p>
 		<br>
 		<p>Take Note that this is a constant work-in-progress. Links,Meeting Codes, Passwords, Meeting Availability, and functionality may change/break/be disconituned at any moment.</p>
 		<br>
