@@ -124,12 +124,12 @@
 const decode = (str) => atob(str);
 const reverse = (str) => str.split("").reverse().join("");
 
-// Obfuscated password (real password: )
-const pw = "NTI2MjIx"; // 
+// Obfuscated password (real password: 122625)
+const pw = "NTI2MjIx"; // base64 of reversed password
 
-// Obfuscated Google Sheet URLs
-const trackerURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0wJnNpbmdsZT10cnVl";
-const timeslotURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0xMTMzNDUwNjU2JnNpbmdsZT10cnVl";
+// Updated Obfuscated Google Sheet URLs
+const trackerURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2UvZTJQQUNYLTF2WUlaQUE0c05OQnJLXzFiOEZYaWRwaE9SM251V1FNMHhCTDMxM2RUalcxcHV1aGg5clhYaHphaVlNYkNDc3hMZmFyNVJHRjdXaUVxUjA/cHVibWx0aD9naWQ9MCZzaW5nbGU9dHJ1ZQ==";
+const timeslotURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2UvZTJQQUNYLTF2WUlaQUE0c05OQnJLXzFiOEZYaWRwaE9SM251V1FNMHhCTDMxM2RUalcxcHV1aGg5clhYaHphaVlNYkNDc3hMZmFyNVJHRjdXaUVxUjA/cHVibWx0aD9naWQ9MTEzMzQ1MDY1NiZzaW5nbGU9dHJ1ZQ==";
 
 const correctPassword = reverse(decode(pw));
 let attempts = 0;
