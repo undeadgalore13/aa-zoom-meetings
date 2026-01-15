@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Access Required</title>
+<title>Protected Access</title>
 
 <style>
     body {
@@ -20,7 +20,7 @@
 
     .container {
         text-align: center;
-        max-width: 420px;
+        max-width: 400px;
         width: 90%;
         padding: 30px;
         border-radius: 10px;
@@ -33,38 +33,43 @@
         font-size: 1.6em;
     }
 
-    input {
-        width: 100%;
-        padding: 14px;
-        font-size: 1.1em;
-        margin-bottom: 15px;
-        border-radius: 6px;
-        border: none;
-        outline: none;
+    .pin-input {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .pin-input input {
+        width: 40px;
+        height: 50px;
+        font-size: 2em;
         text-align: center;
-        letter-spacing: 3px;
-    }
-
-    button {
-        padding: 14px 20px;
-        font-size: 1em;
-        border: none;
         border-radius: 6px;
-        cursor: pointer;
-        background: #2e7dff;
+        border: 2px solid #555;
+        background: #111;
         color: #fff;
-        margin: 10px 0;
-        width: 100%;
+        outline: none;
+        -webkit-text-security: disc; /* hide digits */
+        text-security: disc;
+        transition: border 0.2s;
     }
 
-    button:hover {
-        background: #1e5fd1;
+    .pin-input.shake {
+        animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        50% { transform: translateX(6px); }
+        75% { transform: translateX(-6px); }
+        100% { transform: translateX(0); }
     }
 
     .message {
-        margin-top: 15px;
         color: #ff5c5c;
         font-size: 0.95em;
+        margin-top: 10px;
     }
 
     .links {
@@ -73,7 +78,15 @@
     }
 
     .links button {
+        padding: 14px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
         background: #28a745;
+        color: #fff;
+        margin: 10px 0;
+        width: 100%;
     }
 
     .links button:hover {
@@ -83,21 +96,18 @@
 </head>
 
 <body>
-
 <div class="container">
     <h1>Protected Access</h1>
 
     <div id="password-area">
-        <input
-            type="password"
-            id="passwordInput"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            maxlength="6"
-            autocomplete="off"
-            placeholder="Enter password"
-        >
-        <button onclick="checkPassword()">Submit</button>
+        <div class="pin-input" id="pinContainer">
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" />
+        </div>
         <div class="message" id="message"></div>
     </div>
 
@@ -108,79 +118,87 @@
 </div>
 
 <script>
-    /* ==========================
-       OBFUSCATION HELPERS
-    ========================== */
-    const decode = (str) => atob(str);
-    const reverse = (str) => str.split("").reverse().join("");
+/* ==========================
+   OBFUSCATION HELPERS
+========================== */
+const decode = (str) => atob(str);
+const reverse = (str) => str.split("").reverse().join("");
 
-    /* ==========================
-       OBFUSCATED DATA
-    ========================== */
+// Obfuscated password (real password: )
+const pw = "NTI2MjIx"; // 
 
-    // Real password: 122625
-    const pw = "NTI2MjIx"; // base64 of reversed password
+// Obfuscated Google Sheet URLs
+const trackerURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0wJnNpbmdsZT10cnVl";
+const timeslotURL = "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0xMTMzNDUwNjU2JnNpbmdsZT10cnVl";
 
-    const trackerURL =
-        "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0wJnNpbmdsZT10cnVl";
+const correctPassword = reverse(decode(pw));
+let attempts = 0;
 
-    const timeslotURL =
-        "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0xMTMzNDUwNjU2JnNpbmdsZT10cnVl";
+const pinContainer = document.getElementById('pinContainer');
+const inputs = Array.from(pinContainer.querySelectorAll('input'));
+const message = document.getElementById('message');
 
-    let attempts = 0;
-    const correctPassword = reverse(decode(pw));
+function getInputValue() {
+    return inputs.map(i => i.value).join('');
+}
 
-    /* ==========================
-       PASSWORD CHECK
-    ========================== */
-    function checkPassword() {
-        const inputEl = document.getElementById("passwordInput");
-        const message = document.getElementById("message");
+function clearInput() {
+    inputs.forEach(i => i.value = '');
+    inputs[0].focus();
+}
 
-        // Force numeric only (even pasted)
-        inputEl.value = inputEl.value.replace(/\D/g, '');
-
-        if (inputEl.value === correctPassword) {
-            document.getElementById("password-area").style.display = "none";
-            document.getElementById("links").style.display = "block";
-
-            document.getElementById("trackerBtn").onclick = () => {
-                window.location.href = decode(trackerURL);
-            };
-
-            document.getElementById("timeslotBtn").onclick = () => {
-                window.location.href = decode(timeslotURL);
-            };
-            return;
+// Auto-focus & auto-advance logic
+inputs.forEach((input, idx) => {
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g,''); // numbers only
+        if(input.value && idx < inputs.length - 1) {
+            inputs[idx+1].focus();
         }
-
-        attempts++;
-
-        if (attempts === 1) {
-            message.textContent = "incorrect response; two more attempts";
-        } else if (attempts === 2) {
-            message.textContent = "incorrect response; last attempt";
-        } else {
-            message.textContent =
-                "incorrect response entered. maximum attempts reached, returning to landing page";
-
-            setTimeout(() => {
-                window.location.href =
-                    "https://undeadgalore13.github.io/aa-zoom-meetings/";
-            }, 2000);
+        if(getInputValue().length === 6) {
+            checkPassword();
         }
+    });
 
-        inputEl.value = "";
-        inputEl.focus();
+    input.addEventListener('keydown', e => {
+        if(e.key === "Backspace" && !input.value && idx > 0){
+            inputs[idx-1].focus();
+        }
+    });
+});
+
+function checkPassword() {
+    const val = getInputValue();
+    if(val === correctPassword){
+        document.getElementById('password-area').style.display = 'none';
+        document.getElementById('links').style.display = 'block';
+
+        document.getElementById('trackerBtn').onclick = () => { window.location.href = decode(trackerURL); };
+        document.getElementById('timeslotBtn').onclick = () => { window.location.href = decode(timeslotURL); };
+
+        return;
     }
 
-    /* ==========================
-       AUTO-FOCUS ON LOAD
-    ========================== */
-    window.onload = () => {
-        document.getElementById("passwordInput").focus();
-    };
-</script>
+    attempts++;
+    pinContainer.classList.add('shake');
+    setTimeout(() => pinContainer.classList.remove('shake'), 400);
 
+    if(attempts === 1){
+        message.textContent = "incorrect response; two more attempts";
+    } else if(attempts === 2){
+        message.textContent = "incorrect response; last attempt";
+    } else {
+        message.textContent = "incorrect response entered. maximum attempts reached, returning to landing page";
+        setTimeout(() => {
+            window.location.href = "https://undeadgalore13.github.io/aa-zoom-meetings/";
+        }, 2000);
+    }
+
+    clearInput();
+}
+
+// Auto-focus first input on load
+window.onload = () => { inputs[0].focus(); };
+
+</script>
 </body>
 </html>
