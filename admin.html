@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Required</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #0f0f0f;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .container {
+        text-align: center;
+        max-width: 420px;
+        width: 90%;
+        padding: 30px;
+        border-radius: 10px;
+        background: #1a1a1a;
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        display: none;
+    }
+
+    button {
+        padding: 14px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background: #28a745;
+        color: #fff;
+        margin: 12px 0;
+        width: 100%;
+    }
+
+    button:hover {
+        background: #1e7e34;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+    <h1>Authorized Access</h1>
+
+    <button id="trackerBtn">Meeting Tracker</button>
+    <button id="timeslotBtn">24 Hour Timeslot</button>
+</div>
+
+<script>
+    // === UTILITIES ===
+    const decode = (s) => atob(s);
+    const reverse = (s) => s.split("").reverse().join("");
+
+    // === OBFUSCATED PASSWORD ===
+    //
+    const pw = "NTI2MjIx";
+
+    // === OBFUSCATED URLS ===
+    const trackerURL =
+        "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0wJnNpbmdsZT10cnVl";
+
+    const timeslotURL =
+        "aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlllWkFBNHNOTkJyS18xYjhGWGlkcGhPUjNud1dRTTB4QkwzQTEzZFRqRzFwdXVoaDlyWFhoemFpWW9iNENzeExmYXI1UkdKN1dpRXFSMC9wdWJodG1sP2dpZD0xMTMzNDUwNjU2JnNpbmdsZT10cnVl";
+
+    let attempts = 0;
+    const correctPassword = reverse(decode(pw));
+
+    function requestPassword() {
+        while (attempts < 3) {
+            const input = prompt("Enter password:");
+
+            if (input === null) continue;
+
+            if (input === correctPassword) {
+                unlock();
+                return;
+            }
+
+            attempts++;
+
+            if (attempts === 1) {
+                alert("incorrect response; two more attempts");
+            } else if (attempts === 2) {
+                alert("incorrect response; last attempt");
+            } else {
+                alert(
+                    "incorrect response entered. maximum attempts reached, returning to landing page"
+                );
+                setTimeout(() => {
+                    window.location.href =
+                        "https://undeadgalore13.github.io/aa-zoom-meetings/";
+                }, 2000);
+            }
+        }
+    }
+
+    function unlock() {
+        document.getElementById("content").style.display = "block";
+
+        document.getElementById("trackerBtn").onclick = () => {
+            window.location.href = decode(trackerURL);
+        };
+
+        document.getElementById("timeslotBtn").onclick = () => {
+            window.location.href = decode(timeslotURL);
+        };
+    }
+
+    // 🔐 PROMPT IMMEDIATELY ON PAGE LOAD
+    window.onload = requestPassword;
+</script>
+
+</body>
+</html>
