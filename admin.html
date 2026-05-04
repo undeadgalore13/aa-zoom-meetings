@@ -3,184 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Protected Access</title>
+<title>Preference Test</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #0f0f0f;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
+body {
+    font-family: -apple-system, sans-serif;
+    background: #0f0f0f;
+    color: white;
+    padding: 15px;
+}
+h1 { text-align: center; }
+h2 { margin-top: 25px; }
+p { font-size: 14px; color: #aaa; }
 
-    .container {
-        text-align: center;
-        max-width: 400px;
-        width: 90%;
-        padding: 30px;
-        border-radius: 10px;
-        background: #1a1a1a;
-        box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+.section { margin-bottom: 25px; }
 
-    h1 {
-        margin-bottom: 20px;
-        font-size: 1.6em;
-    }
+.search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: none;
+}
 
-    .pin-input {
-        display: flex;
-        justify-content: space-between;
-        margin: 20px 0;
-    }
+label {
+    display: block;
+    padding: 8px;
+    border-bottom: 1px solid #222;
+}
 
-    .pin-input input {
-        width: 40px;
-        height: 50px;
-        font-size: 2em;
-        text-align: center;
-        border-radius: 6px;
-        border: 2px solid #555;
-        background: #111;
-        color: #fff;
-        outline: none;
-        -webkit-text-security: disc;
-        text-security: disc;
-    }
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+}
 
-    .pin-input.shake {
-        animation: shake 0.4s;
-    }
+.generate { background: #00c853; color: white; }
+.copy { background: #2962ff; color: white; }
 
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-6px); }
-        50% { transform: translateX(6px); }
-        75% { transform: translateX(-6px); }
-        100% { transform: translateX(0); }
-    }
-
-    .message {
-        color: #ff5c5c;
-        font-size: 0.95em;
-        margin-top: 10px;
-    }
-
-    .links {
-        display: none;
-        margin-top: 20px;
-    }
-
-    .links button {
-        padding: 14px 20px;
-        font-size: 1em;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        background: #28a745;
-        color: #fff;
-        margin: 10px 0;
-        width: 100%;
-    }
-
-    .links button:hover {
-        background: #1e7e34;
-    }
+textarea {
+    width: 100%;
+    height: 220px;
+    margin-top: 10px;
+    background: #111;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
-    <h1>Protected Access</h1>
 
-    <div id="password-area">
-        <div class="pin-input" id="pinContainer">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-            <input type="tel" inputmode="numeric" maxlength="1" autocomplete="off">
-        </div>
-        <div class="message" id="message"></div>
-    </div>
+<h1>Food & Lifestyle Preferences</h1>
 
-    <div class="links" id="links">
-        <button onclick="location.href='https://docs.google.com/spreadsheets/d/e/2PACX-1vQeZAA4sNNBrK_1b8FXidphOR3nwWQM0xBL3A13dTjG1puuhh9xrXhzaiYob4CsxLfar5RGJ7WiEqR0/pubhtml?gid=0&single=true'">
-            Meeting Tracker
-        </button>
+<div id="container"></div>
 
-        <button onclick="location.href='https://docs.google.com/spreadsheets/d/e/2PACX-1vQeZAA4sNNBrK_1b8FXidphOR3nwWQM0xBL3A13dTjG1puuhh9xrXhzaiYob4CsxLfar5RGJ7WiEqR0/pubhtml?gid=1133450656&single=true'">
-            24 Hour Timeslot
-        </button>
-    </div>
-</div>
+<button class="generate" onclick="generate()">Generate My Answers</button>
+<textarea id="output" placeholder="Your answers will appear here..."></textarea>
+<button class="copy" onclick="copyText()">Copy Answers</button>
 
 <script>
-    const correctPassword = "122625";
-    let attempts = 0;
 
-    const inputs = document.querySelectorAll('.pin-input input');
-    const message = document.getElementById('message');
-    const pinContainer = document.getElementById('pinContainer');
+// ---------- FULL TITLES ----------
+const titles = {
+Q1: "1. Fast Food & Quick Eats You Like",
+Q2: "2. Restaurant Types / Styles You Like",
+Q3: "3. Dislikes (Food, Places, Ingredients, Rules)",
+Q4: "4. Drinks You Like",
+Q5: "5. Scents You Like",
+Q6: "6. Flavor Preferences"
+};
 
-    function getPIN() {
-        return Array.from(inputs).map(i => i.value).join('');
-    }
+// ---------- DATA ----------
+const data = {
 
-    function clearPIN() {
-        inputs.forEach(i => i.value = '');
-        inputs[0].focus();
-    }
+Q1: ["McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic","Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s","Five Guys","Jersey Mike’s","Jimmy John’s","Wingstop","Culver’s","Raising Cane’s","Whataburger","Fazoli’s","Krispy Kreme","Krystal","Freddy’s","Zaxby’s","Bojangles","Cook Out","Firehouse Subs","Tropical Smoothie Cafe","Smoothie King","Blaze Pizza","MOD Pizza","Marco’s Pizza","Papa John’s","Petro’s","Buddy’s BBQ","Pal’s","Gus’s Chicken","Pollo Ala Brasa","Smash Shack","Golden Roast","Hunt Brothers","Weigel’s","Casey’s","Speedway","Victor’s Taco Shop","Chapulines"],
 
-    inputs.forEach((input, idx) => {
-        input.addEventListener('input', () => {
-            input.value = input.value.replace(/\D/g, '');
-            if (input.value && idx < inputs.length - 1) {
-                inputs[idx + 1].focus();
-            }
-            if (getPIN().length === 6) checkPassword();
+Q2: ["Steakhouse","American","Diner","BBQ","Mexican","Italian","Chinese","Japanese","Sushi","Thai","Indian","Mediterranean","Greek","French","Pizza","Burgers","Seafood","Vegan","Buffet","Fine Dining","Brunch","Cafe"],
+
+Q3: ["No seafood","No pork","No beef","No dairy","No spicy","No fried","No raw food","Mushrooms","Onions","Tomatoes","Pickles","Cheese","Eggs","Crunchy","Soft","Crowded places","Long waits","Buffets","Spicy","Sweet","Salty","Bitter","Sour","Smoky","Creamy"],
+
+Q4: ["Coke","Diet Coke","Coke Zero","Pepsi","Dr Pepper","Sprite","Sweet Tea","Unsweet Tea","Lemonade","Water","Gatorade","Coffee","Latte","Milkshake","Smoothie","Energy Drinks"],
+
+Q5: ["Vanilla","Lavender","Rose","Coconut","Fresh Linen","Ocean","Citrus","Sandalwood","Mint","Coffee","Campfire"],
+
+Q6: ["Sweet","Salty","Spicy","Mild","Hot","Sour","Tangy","Savory","Smoky","Creamy","Fresh","Crunchy","Juicy"]
+
+};
+
+// ---------- BUILD ----------
+const container = document.getElementById("container");
+
+for (let section in data) {
+    let div = document.createElement("div");
+    div.className = "section";
+
+    let title = document.createElement("h2");
+    title.innerText = titles[section];
+    div.appendChild(title);
+
+    let desc = document.createElement("p");
+    desc.innerText = "Select all that apply";
+    div.appendChild(desc);
+
+    let search = document.createElement("input");
+    search.className = "search";
+    search.placeholder = "Search...";
+    search.oninput = function () {
+        let labels = div.querySelectorAll("label");
+        labels.forEach(l => {
+            l.style.display = l.innerText.toLowerCase().includes(search.value.toLowerCase()) ? "block" : "none";
         });
+    };
+    div.appendChild(search);
 
-        input.addEventListener('keydown', e => {
-            if (e.key === "Backspace" && !input.value && idx > 0) {
-                inputs[idx - 1].focus();
-            }
-        });
+    data[section].forEach(item => {
+        let label = document.createElement("label");
+        label.innerHTML = `<input type="checkbox" value="${item}"> ${item}`;
+        div.appendChild(label);
     });
 
-    function checkPassword() {
-        if (getPIN() === correctPassword) {
-            document.getElementById('password-area').style.display = 'none';
-            document.getElementById('links').style.display = 'block';
-            return;
-        }
+    container.appendChild(div);
+}
 
-        attempts++;
-        pinContainer.classList.add('shake');
-        setTimeout(() => pinContainer.classList.remove('shake'), 400);
+// ---------- GENERATE ----------
+function generate() {
+    let output = "";
 
-        if (attempts === 1) {
-            message.textContent = "incorrect response; two more attempts";
-        } else if (attempts === 2) {
-            message.textContent = "incorrect response; last attempt";
-        } else {
-            message.textContent =
-                "incorrect response entered. maximum attempts reached, returning to landing page";
-            setTimeout(() => {
-                window.location.href = "https://undeadgalore13.github.io/aa-zoom-meetings/";
-            }, 2000);
-        }
+    for (let section in data) {
+        let checked = document.querySelectorAll(`#container input[type=checkbox]:checked`);
+        let values = [];
 
-        clearPIN();
+        checked.forEach(c => {
+            let parent = c.closest(".section").querySelector("h2").innerText;
+            if (parent === titles[section]) {
+                values.push(c.value);
+            }
+        });
+
+        output += titles[section] + ":\n";
+        values.forEach(v => output += "- " + v + "\n");
+        output += "\n";
     }
 
-    window.onload = () => inputs[0].focus();
+    document.getElementById("output").value = output;
+}
+
+// ---------- COPY ----------
+function copyText() {
+    let text = document.getElementById("output");
+    text.select();
+    document.execCommand("copy");
+    alert("Copied!");
+}
+
 </script>
 
 </body>
