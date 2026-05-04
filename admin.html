@@ -14,9 +14,9 @@ body {
 }
 h1 { text-align: center; }
 h2 { margin-top: 25px; }
-p { font-size: 14px; color: #aaa; }
+p { color: #aaa; font-size: 14px; }
 
-.section { margin-bottom: 25px; }
+.section { margin-bottom: 30px; }
 
 label {
     display: block;
@@ -51,7 +51,6 @@ textarea {
 <body>
 
 <h1>Food & Lifestyle Preferences</h1>
-
 <div id="container"></div>
 
 <button class="generate" onclick="generate()">Generate My Answers</button>
@@ -61,75 +60,77 @@ textarea {
 <script>
 
 const titles = {
-Q1: "1. Fast Food & Quick Eats You Like",
-Q2: "2. Restaurant Types / Styles You Like",
-Q3: "3. Dislikes (Food, Ingredients, Rules)",
-Q4: "4. Drinks You Like",
-Q5: "5. Scents You Like",
-Q6: "6. Flavor Preferences"
+Q1:"1. Fast Food & Quick Eats You Like",
+Q2:"2. Restaurant Types / Styles You Like",
+Q3:"3. Dislikes (Food, Ingredients, Rules)",
+Q4:"4. Drinks You Like",
+Q5:"5. Scents You Like",
+Q6:"6. Flavor Preferences"
 };
 
 const data = {
 
-// ---------- Q1 FULL ----------
-Q1: [
-"McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic Drive-In",
-"Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s","Five Guys",
-"Jersey Mike’s","Jimmy John’s","Wingstop","Culver’s","Raising Cane’s","Whataburger","Fazoli’s","Krispy Kreme",
-"Krystal","Freddy’s Frozen Custard","Zaxby’s","Bojangles","Cook Out","Firehouse Subs","Tropical Smoothie Cafe",
-"Smoothie King","Blaze Pizza","MOD Pizza","Marco’s Pizza","Papa John’s",
-"Petro’s Chili & Chips","Buddy’s Bar-B-Q","Pal’s Sudden Service","Gus’s World Famous Fried Chicken",
-"Pollo Ala Brasa","Denton’s Burgers","Smash Shack Burger","Captain Jack’s","The Dogout",
-"D&B Hot Dogs & Ice Cream","Golden Roast Coffee & Eatery","Sam & Andy’s",
-"Hunt Brothers Pizza","Weigel’s","Casey’s General Store","Speedway","Exxon","Shell",
-"Victor’s Taco Shop","Chapulines Street Tacos","Little River BBQ","Full Service BBQ","Hot Rod’s 50’s Diner",
-"Local Food Trucks","Pop-up Burger Stands","Ice Cream Stands","Independent Smoothie Shops"
+// -------- Q1 (FAST FOOD ~90+) --------
+Q1:[
+"McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic",
+"Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s",
+"Five Guys","Jersey Mike’s","Jimmy John’s","Wingstop","Culver’s","Raising Cane’s","Whataburger",
+"Fazoli’s","Krispy Kreme","Krystal","Freddy’s","Zaxby’s","Bojangles","Cook Out","Firehouse Subs",
+"Tropical Smoothie Cafe","Smoothie King","Blaze Pizza","MOD Pizza","Marco’s Pizza","Papa John’s",
+"Petro’s","Buddy’s BBQ","Pal’s","Gus’s Chicken","Pollo Ala Brasa","Smash Shack","Captain Jack’s",
+"Dogout","Golden Roast","Sam & Andy’s","Hunt Brothers Pizza","Weigel’s","Casey’s","Speedway",
+"Exxon Food","Shell Food","Victor’s Taco Shop","Chapulines","Little River BBQ","Full Service BBQ",
+"Hot Rod’s Diner","Food Trucks","Ice Cream Stands","Pop-Up Burgers"
 ],
 
-// ---------- Q2 FULL ----------
-Q2: [
+// -------- Q2 (~70+) --------
+Q2:[
 "Steakhouse","American Traditional","American Modern","Diner","BBQ","Southern","Comfort Food",
 "Mexican","Tex-Mex","Latin American","Cuban","Brazilian Steakhouse","Peruvian","Spanish Tapas",
 "Italian","French","Mediterranean","Greek","German","British Pub",
 "Chinese","Japanese","Sushi","Ramen","Korean","Thai","Vietnamese","Filipino","Indian","Asian Fusion",
-"Pizza","Burgers","Sandwich/Deli","Wings","Seafood Casual","Food Trucks",
+"Pizza","Burgers","Sandwich Shop","Wings","Seafood","Food Trucks",
 "Seafood Boil","Cajun","Oyster Bar","Fish & Chips",
 "Vegan","Vegetarian","Organic","Gluten-Free","Juice Bar",
 "Bakery","Cafe","Ice Cream","Donut Shop",
 "Fine Dining","Buffet","All You Can Eat","Hot Pot","Korean BBQ","Hibachi",
-"Fusion","Farm to Table","Gastropub","Brunch"
+"Fusion","Farm-to-Table","Gastropub","Brunch"
 ],
 
-// ---------- Q3 FULL ----------
-Q3: [
-"No seafood","No pork","No beef","No chicken","No dairy","No gluten","No spicy","No fried food","No fast food",
-"No raw food","No unfamiliar foods",
+// -------- Q3 (~90+) --------
+Q3:[
+"No seafood","No pork","No beef","No chicken","No dairy","No gluten","No spicy","No fried",
+"No fast food","No raw food","No unfamiliar food",
 "Mushrooms","Onions","Tomatoes","Pickles","Mayo","Cheese","Eggs","Beans","Olives",
-"Crunchy foods","Soft foods","Soggy foods",
-"Expensive restaurants","Long wait times","Loud places","Crowded places","Buffets","Sharing food",
-"Spicy","Sweet","Salty","Bitter","Sour","Smoky","Savory-heavy","Garlic-heavy","Onion-heavy",
-"Vinegar-based","Citrus-heavy","Creamy","Oily foods"
+"Crunchy","Soft","Soggy","Dry",
+"Expensive","Long waits","Crowded","Loud","Buffets","Sharing food",
+"Spicy","Sweet","Salty","Bitter","Sour","Smoky","Creamy","Oily","Garlic-heavy","Onion-heavy",
+"Vinegar","Citrus-heavy","Strong flavors","Bland food"
 ],
 
-// ---------- Q4 FULL (100 DRINKS) ----------
-Q4: [
-"Coca-Cola","Diet Coke","Coca-Cola Zero Sugar","Pepsi","Diet Pepsi","Pepsi Zero Sugar","Dr Pepper","Diet Dr Pepper","Dr Pepper Zero",
+// -------- Q4 (100+) --------
+Q4:[
+"Coca-Cola","Diet Coke","Coke Zero","Pepsi","Diet Pepsi","Pepsi Zero","Dr Pepper","Diet Dr Pepper","Dr Pepper Zero",
 "Sprite","Sprite Zero","Starry","Mountain Dew","Diet Mountain Dew","Mountain Dew Zero",
-"Fanta Orange","Fanta Strawberry","Fanta Pineapple","Sunkist Orange","Mug Root Beer","Barq’s Root Beer","A&W Root Beer","Pibb Xtra","Crush Orange",
+"Fanta Orange","Fanta Strawberry","Fanta Pineapple","Sunkist","Root Beer","A&W","Barq’s","Pibb Xtra","Crush",
 "Sweet Tea","Unsweet Tea","Green Tea","Peach Tea","Raspberry Tea",
-"Lemonade","Strawberry Lemonade","Pink Lemonade","Arnold Palmer","Fruit Punch","Hi-C Orange","Apple Juice","Orange Juice","Cranberry Juice","Grape Juice","Pineapple Juice",
-"Bottled Water","Sparkling Water","Flavored Sparkling Water","Smartwater","Vitaminwater","Propel","Alkaline Water","Coconut Water","Electrolyte Water",
-"Gatorade","Gatorade Zero","Powerade","Powerade Zero","BodyArmor","BodyArmor Lyte",
+"Lemonade","Strawberry Lemonade","Pink Lemonade","Arnold Palmer",
+"Fruit Punch","Hi-C","Apple Juice","Orange Juice","Cranberry Juice","Grape Juice","Pineapple Juice",
+"Water","Sparkling Water","Flavored Water","Smartwater","Vitaminwater","Propel","Coconut Water",
+"Gatorade","Gatorade Zero","Powerade","Powerade Zero","BodyArmor",
 "Red Bull","Sugar-Free Red Bull","Monster","Monster Zero",
-"Hot Coffee","Iced Coffee","Cold Brew","Latte","Iced Latte","Cappuccino","Espresso","Americano","Frappé","Mocha","Caramel Coffee","Vanilla Coffee",
-"Milk","Chocolate Milk","Strawberry Milk","Milkshake Vanilla","Milkshake Chocolate","Milkshake Strawberry",
-"Smoothie Fruit","Smoothie Green","Slushie Cherry","Slushie Blue Raspberry","Frozen Lemonade",
-"Icee Cola","Icee Fruit","Boba Tea","Thai Tea","Horchata","Agua Fresca","Kombucha",
-"Diet Lemonade","Zero Sugar Lemonade","Protein Shake","Meal Replacement Shake","Hot Chocolate"
+"Coffee","Iced Coffee","Cold Brew","Latte","Cappuccino","Espresso","Americano","Frappé","Mocha",
+"Milk","Chocolate Milk","Strawberry Milk",
+"Milkshake Vanilla","Milkshake Chocolate","Milkshake Strawberry",
+"Smoothie Fruit","Smoothie Green",
+"Slushie Cherry","Slushie Blue Raspberry",
+"Frozen Lemonade","Icee Cola","Icee Fruit",
+"Boba Tea","Thai Tea","Horchata","Kombucha",
+"Diet Lemonade","Zero Lemonade","Protein Shake","Meal Shake","Hot Chocolate"
 ],
 
-// ---------- Q5 FULL ----------
-Q5: [
+// -------- Q5 (~90) --------
+Q5:[
 "Rose","Lavender","Jasmine","Cherry Blossom","Gardenia","Lily","Orchid","Peony","Hibiscus","Violet",
 "Strawberry","Mango","Peach","Apple","Green Apple","Watermelon","Pineapple","Coconut","Banana","Cherry","Blueberry",
 "Lemon","Lime","Orange","Grapefruit","Bergamot","Fresh Linen","Fresh Air","Rain","Ocean",
@@ -137,41 +138,30 @@ Q5: [
 "Sandalwood","Cedarwood","Pine","Oak","Patchouli","Moss","Earth",
 "Cinnamon","Clove","Nutmeg","Amber","Musk","Incense","Leather",
 "Baby Powder","Soap","Lotion","Shampoo","Fabric Softener",
-"Mint","Peppermint","Eucalyptus","Basil","Green Tea","Aloe","Fresh Cut Grass",
-"Coffee","Fresh Bread","Popcorn","Campfire","Tobacco","Perfume","Cologne"
+"Mint","Peppermint","Eucalyptus","Basil","Green Tea","Aloe","Grass",
+"Coffee","Bread","Popcorn","Campfire","Tobacco","Perfume","Cologne"
 ],
 
-// ---------- Q6 FULL ----------
-Q6: [
-"Lightly Sweet","Very Sweet","Candy-like","Chocolatey","Caramel","Honey","Vanilla",
-"Lightly Salty","Very Salty","Buttery","Savory-heavy",
-"No Spice","Mild","Medium","Hot","Extra Hot","Buffalo","Peppery",
-"Light Sour","Strong Sour","Tangy","Citrus","Vinegar",
-"Meaty","Rich Savory","Brothy","Garlic-heavy","Onion-heavy",
-"Light Smoky","Heavy Smoky","Grilled","BBQ",
-"Creamy","Cheesy","Buttery Texture","Rich",
-"Fresh","Herbal","Crisp","Light Meals",
-"Strong Flavor","Heavily Spiced","Complex","Exotic",
+// -------- Q6 (~70+) --------
+Q6:[
+"Sweet","Very Sweet","Salty","Spicy","Mild","Hot","Extra Hot",
+"Sour","Tangy","Citrus","Umami","Garlic","Onion",
+"Smoky","BBQ","Creamy","Cheesy","Buttery",
+"Fresh","Herbal","Light","Bold","Strong",
 "Crunchy","Crispy","Soft","Juicy","Saucy",
 "Fruity Drinks","Citrus Drinks","Sweet Drinks","Bitter Drinks","Creamy Drinks"
 ]
 
 };
 
-// ---------- BUILD ----------
+// BUILD
 const container = document.getElementById("container");
 
 for (let section in data) {
     let div = document.createElement("div");
     div.className = "section";
 
-    let title = document.createElement("h2");
-    title.innerText = titles[section];
-    div.appendChild(title);
-
-    let desc = document.createElement("p");
-    desc.innerText = "Select all that apply";
-    div.appendChild(desc);
+    div.innerHTML = `<h2>${titles[section]}</h2><p>Select all that apply</p>`;
 
     data[section].forEach(item => {
         let label = document.createElement("label");
@@ -182,27 +172,27 @@ for (let section in data) {
     container.appendChild(div);
 }
 
-// ---------- GENERATE ----------
+// GENERATE
 function generate() {
     let output = "";
 
     for (let section in data) {
-        let values = [];
+        let selected = [];
         document.querySelectorAll("input:checked").forEach(c => {
             if (c.closest(".section").querySelector("h2").innerText === titles[section]) {
-                values.push(c.value);
+                selected.push(c.value);
             }
         });
 
         output += titles[section] + ":\n";
-        values.forEach(v => output += "- " + v + "\n");
+        selected.forEach(v => output += "- " + v + "\n");
         output += "\n";
     }
 
     document.getElementById("output").value = output;
 }
 
-// ---------- COPY ----------
+// COPY
 function copyText() {
     let text = document.getElementById("output");
     text.select();
