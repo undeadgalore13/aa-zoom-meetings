@@ -18,14 +18,6 @@ p { font-size: 14px; color: #aaa; }
 
 .section { margin-bottom: 25px; }
 
-.search {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: none;
-}
-
 label {
     display: block;
     padding: 8px;
@@ -41,12 +33,12 @@ button {
     font-size: 18px;
 }
 
-.generate { background: #00c853; color: white; }
-.copy { background: #2962ff; color: white; }
+.generate { background: #00c853; }
+.copy { background: #2962ff; }
 
 textarea {
     width: 100%;
-    height: 220px;
+    height: 260px;
     margin-top: 10px;
     background: #111;
     color: white;
@@ -63,35 +55,106 @@ textarea {
 <div id="container"></div>
 
 <button class="generate" onclick="generate()">Generate My Answers</button>
-<textarea id="output" placeholder="Your answers will appear here..."></textarea>
+<textarea id="output"></textarea>
 <button class="copy" onclick="copyText()">Copy Answers</button>
 
 <script>
 
-// ---------- FULL TITLES ----------
 const titles = {
 Q1: "1. Fast Food & Quick Eats You Like",
 Q2: "2. Restaurant Types / Styles You Like",
-Q3: "3. Dislikes (Food, Places, Ingredients, Rules)",
+Q3: "3. Dislikes (Food, Ingredients, Rules)",
 Q4: "4. Drinks You Like",
 Q5: "5. Scents You Like",
 Q6: "6. Flavor Preferences"
 };
 
-// ---------- DATA ----------
 const data = {
 
-Q1: ["McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic","Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s","Five Guys","Jersey Mike’s","Jimmy John’s","Wingstop","Culver’s","Raising Cane’s","Whataburger","Fazoli’s","Krispy Kreme","Krystal","Freddy’s","Zaxby’s","Bojangles","Cook Out","Firehouse Subs","Tropical Smoothie Cafe","Smoothie King","Blaze Pizza","MOD Pizza","Marco’s Pizza","Papa John’s","Petro’s","Buddy’s BBQ","Pal’s","Gus’s Chicken","Pollo Ala Brasa","Smash Shack","Golden Roast","Hunt Brothers","Weigel’s","Casey’s","Speedway","Victor’s Taco Shop","Chapulines"],
+// ---------- Q1 FULL ----------
+Q1: [
+"McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic Drive-In",
+"Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s","Five Guys",
+"Jersey Mike’s","Jimmy John’s","Wingstop","Culver’s","Raising Cane’s","Whataburger","Fazoli’s","Krispy Kreme",
+"Krystal","Freddy’s Frozen Custard","Zaxby’s","Bojangles","Cook Out","Firehouse Subs","Tropical Smoothie Cafe",
+"Smoothie King","Blaze Pizza","MOD Pizza","Marco’s Pizza","Papa John’s",
+"Petro’s Chili & Chips","Buddy’s Bar-B-Q","Pal’s Sudden Service","Gus’s World Famous Fried Chicken",
+"Pollo Ala Brasa","Denton’s Burgers","Smash Shack Burger","Captain Jack’s","The Dogout",
+"D&B Hot Dogs & Ice Cream","Golden Roast Coffee & Eatery","Sam & Andy’s",
+"Hunt Brothers Pizza","Weigel’s","Casey’s General Store","Speedway","Exxon","Shell",
+"Victor’s Taco Shop","Chapulines Street Tacos","Little River BBQ","Full Service BBQ","Hot Rod’s 50’s Diner",
+"Local Food Trucks","Pop-up Burger Stands","Ice Cream Stands","Independent Smoothie Shops"
+],
 
-Q2: ["Steakhouse","American","Diner","BBQ","Mexican","Italian","Chinese","Japanese","Sushi","Thai","Indian","Mediterranean","Greek","French","Pizza","Burgers","Seafood","Vegan","Buffet","Fine Dining","Brunch","Cafe"],
+// ---------- Q2 FULL ----------
+Q2: [
+"Steakhouse","American Traditional","American Modern","Diner","BBQ","Southern","Comfort Food",
+"Mexican","Tex-Mex","Latin American","Cuban","Brazilian Steakhouse","Peruvian","Spanish Tapas",
+"Italian","French","Mediterranean","Greek","German","British Pub",
+"Chinese","Japanese","Sushi","Ramen","Korean","Thai","Vietnamese","Filipino","Indian","Asian Fusion",
+"Pizza","Burgers","Sandwich/Deli","Wings","Seafood Casual","Food Trucks",
+"Seafood Boil","Cajun","Oyster Bar","Fish & Chips",
+"Vegan","Vegetarian","Organic","Gluten-Free","Juice Bar",
+"Bakery","Cafe","Ice Cream","Donut Shop",
+"Fine Dining","Buffet","All You Can Eat","Hot Pot","Korean BBQ","Hibachi",
+"Fusion","Farm to Table","Gastropub","Brunch"
+],
 
-Q3: ["No seafood","No pork","No beef","No dairy","No spicy","No fried","No raw food","Mushrooms","Onions","Tomatoes","Pickles","Cheese","Eggs","Crunchy","Soft","Crowded places","Long waits","Buffets","Spicy","Sweet","Salty","Bitter","Sour","Smoky","Creamy"],
+// ---------- Q3 FULL ----------
+Q3: [
+"No seafood","No pork","No beef","No chicken","No dairy","No gluten","No spicy","No fried food","No fast food",
+"No raw food","No unfamiliar foods",
+"Mushrooms","Onions","Tomatoes","Pickles","Mayo","Cheese","Eggs","Beans","Olives",
+"Crunchy foods","Soft foods","Soggy foods",
+"Expensive restaurants","Long wait times","Loud places","Crowded places","Buffets","Sharing food",
+"Spicy","Sweet","Salty","Bitter","Sour","Smoky","Savory-heavy","Garlic-heavy","Onion-heavy",
+"Vinegar-based","Citrus-heavy","Creamy","Oily foods"
+],
 
-Q4: ["Coke","Diet Coke","Coke Zero","Pepsi","Dr Pepper","Sprite","Sweet Tea","Unsweet Tea","Lemonade","Water","Gatorade","Coffee","Latte","Milkshake","Smoothie","Energy Drinks"],
+// ---------- Q4 FULL (100 DRINKS) ----------
+Q4: [
+"Coca-Cola","Diet Coke","Coca-Cola Zero Sugar","Pepsi","Diet Pepsi","Pepsi Zero Sugar","Dr Pepper","Diet Dr Pepper","Dr Pepper Zero",
+"Sprite","Sprite Zero","Starry","Mountain Dew","Diet Mountain Dew","Mountain Dew Zero",
+"Fanta Orange","Fanta Strawberry","Fanta Pineapple","Sunkist Orange","Mug Root Beer","Barq’s Root Beer","A&W Root Beer","Pibb Xtra","Crush Orange",
+"Sweet Tea","Unsweet Tea","Green Tea","Peach Tea","Raspberry Tea",
+"Lemonade","Strawberry Lemonade","Pink Lemonade","Arnold Palmer","Fruit Punch","Hi-C Orange","Apple Juice","Orange Juice","Cranberry Juice","Grape Juice","Pineapple Juice",
+"Bottled Water","Sparkling Water","Flavored Sparkling Water","Smartwater","Vitaminwater","Propel","Alkaline Water","Coconut Water","Electrolyte Water",
+"Gatorade","Gatorade Zero","Powerade","Powerade Zero","BodyArmor","BodyArmor Lyte",
+"Red Bull","Sugar-Free Red Bull","Monster","Monster Zero",
+"Hot Coffee","Iced Coffee","Cold Brew","Latte","Iced Latte","Cappuccino","Espresso","Americano","Frappé","Mocha","Caramel Coffee","Vanilla Coffee",
+"Milk","Chocolate Milk","Strawberry Milk","Milkshake Vanilla","Milkshake Chocolate","Milkshake Strawberry",
+"Smoothie Fruit","Smoothie Green","Slushie Cherry","Slushie Blue Raspberry","Frozen Lemonade",
+"Icee Cola","Icee Fruit","Boba Tea","Thai Tea","Horchata","Agua Fresca","Kombucha",
+"Diet Lemonade","Zero Sugar Lemonade","Protein Shake","Meal Replacement Shake","Hot Chocolate"
+],
 
-Q5: ["Vanilla","Lavender","Rose","Coconut","Fresh Linen","Ocean","Citrus","Sandalwood","Mint","Coffee","Campfire"],
+// ---------- Q5 FULL ----------
+Q5: [
+"Rose","Lavender","Jasmine","Cherry Blossom","Gardenia","Lily","Orchid","Peony","Hibiscus","Violet",
+"Strawberry","Mango","Peach","Apple","Green Apple","Watermelon","Pineapple","Coconut","Banana","Cherry","Blueberry",
+"Lemon","Lime","Orange","Grapefruit","Bergamot","Fresh Linen","Fresh Air","Rain","Ocean",
+"Vanilla","Caramel","Chocolate","Honey","Sugar Cookie","Cupcake","Marshmallow","Cotton Candy","Cinnamon Roll",
+"Sandalwood","Cedarwood","Pine","Oak","Patchouli","Moss","Earth",
+"Cinnamon","Clove","Nutmeg","Amber","Musk","Incense","Leather",
+"Baby Powder","Soap","Lotion","Shampoo","Fabric Softener",
+"Mint","Peppermint","Eucalyptus","Basil","Green Tea","Aloe","Fresh Cut Grass",
+"Coffee","Fresh Bread","Popcorn","Campfire","Tobacco","Perfume","Cologne"
+],
 
-Q6: ["Sweet","Salty","Spicy","Mild","Hot","Sour","Tangy","Savory","Smoky","Creamy","Fresh","Crunchy","Juicy"]
+// ---------- Q6 FULL ----------
+Q6: [
+"Lightly Sweet","Very Sweet","Candy-like","Chocolatey","Caramel","Honey","Vanilla",
+"Lightly Salty","Very Salty","Buttery","Savory-heavy",
+"No Spice","Mild","Medium","Hot","Extra Hot","Buffalo","Peppery",
+"Light Sour","Strong Sour","Tangy","Citrus","Vinegar",
+"Meaty","Rich Savory","Brothy","Garlic-heavy","Onion-heavy",
+"Light Smoky","Heavy Smoky","Grilled","BBQ",
+"Creamy","Cheesy","Buttery Texture","Rich",
+"Fresh","Herbal","Crisp","Light Meals",
+"Strong Flavor","Heavily Spiced","Complex","Exotic",
+"Crunchy","Crispy","Soft","Juicy","Saucy",
+"Fruity Drinks","Citrus Drinks","Sweet Drinks","Bitter Drinks","Creamy Drinks"
+]
 
 };
 
@@ -110,17 +173,6 @@ for (let section in data) {
     desc.innerText = "Select all that apply";
     div.appendChild(desc);
 
-    let search = document.createElement("input");
-    search.className = "search";
-    search.placeholder = "Search...";
-    search.oninput = function () {
-        let labels = div.querySelectorAll("label");
-        labels.forEach(l => {
-            l.style.display = l.innerText.toLowerCase().includes(search.value.toLowerCase()) ? "block" : "none";
-        });
-    };
-    div.appendChild(search);
-
     data[section].forEach(item => {
         let label = document.createElement("label");
         label.innerHTML = `<input type="checkbox" value="${item}"> ${item}`;
@@ -135,12 +187,9 @@ function generate() {
     let output = "";
 
     for (let section in data) {
-        let checked = document.querySelectorAll(`#container input[type=checkbox]:checked`);
         let values = [];
-
-        checked.forEach(c => {
-            let parent = c.closest(".section").querySelector("h2").innerText;
-            if (parent === titles[section]) {
+        document.querySelectorAll("input:checked").forEach(c => {
+            if (c.closest(".section").querySelector("h2").innerText === titles[section]) {
                 values.push(c.value);
             }
         });
