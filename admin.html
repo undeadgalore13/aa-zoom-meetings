@@ -33,8 +33,8 @@ button {
     font-size: 18px;
 }
 
-.generate { background: #00c853; }
-.copy { background: #2962ff; }
+.generate { background: #00c853; color: white; }
+.copy { background: #2962ff; color: white; }
 
 textarea {
     width: 100%;
@@ -65,12 +65,12 @@ Q2:"2. Restaurant Types / Styles You Like",
 Q3:"3. Dislikes (Food, Ingredients, Rules)",
 Q4:"4. Drinks You Like",
 Q5:"5. Scents You Like",
-Q6:"6. Flavor Preferences"
+Q6:"6. Flavor Preferences",
+Q7:"7. Dipping Sauces You Like"
 };
 
 const data = {
 
-// -------- Q1 (FAST FOOD ~90+) --------
 Q1:[
 "McDonald’s","Burger King","Wendy’s","Taco Bell","Chick-fil-A","Subway","KFC","Arby’s","Sonic",
 "Domino’s","Pizza Hut","Little Caesars","Popeyes","Panda Express","Dairy Queen","Hardee’s",
@@ -83,7 +83,6 @@ Q1:[
 "Hot Rod’s Diner","Food Trucks","Ice Cream Stands","Pop-Up Burgers"
 ],
 
-// -------- Q2 (~70+) --------
 Q2:[
 "Steakhouse","American Traditional","American Modern","Diner","BBQ","Southern","Comfort Food",
 "Mexican","Tex-Mex","Latin American","Cuban","Brazilian Steakhouse","Peruvian","Spanish Tapas",
@@ -97,7 +96,6 @@ Q2:[
 "Fusion","Farm-to-Table","Gastropub","Brunch"
 ],
 
-// -------- Q3 (~90+) --------
 Q3:[
 "No seafood","No pork","No beef","No chicken","No dairy","No gluten","No spicy","No fried",
 "No fast food","No raw food","No unfamiliar food",
@@ -108,7 +106,6 @@ Q3:[
 "Vinegar","Citrus-heavy","Strong flavors","Bland food"
 ],
 
-// -------- Q4 (100+) --------
 Q4:[
 "Coca-Cola","Diet Coke","Coke Zero","Pepsi","Diet Pepsi","Pepsi Zero","Dr Pepper","Diet Dr Pepper","Dr Pepper Zero",
 "Sprite","Sprite Zero","Starry","Mountain Dew","Diet Mountain Dew","Mountain Dew Zero",
@@ -129,7 +126,6 @@ Q4:[
 "Diet Lemonade","Zero Lemonade","Protein Shake","Meal Shake","Hot Chocolate"
 ],
 
-// -------- Q5 (~90) --------
 Q5:[
 "Rose","Lavender","Jasmine","Cherry Blossom","Gardenia","Lily","Orchid","Peony","Hibiscus","Violet",
 "Strawberry","Mango","Peach","Apple","Green Apple","Watermelon","Pineapple","Coconut","Banana","Cherry","Blueberry",
@@ -142,7 +138,6 @@ Q5:[
 "Coffee","Bread","Popcorn","Campfire","Tobacco","Perfume","Cologne"
 ],
 
-// -------- Q6 (~70+) --------
 Q6:[
 "Sweet","Very Sweet","Salty","Spicy","Mild","Hot","Extra Hot",
 "Sour","Tangy","Citrus","Umami","Garlic","Onion",
@@ -150,6 +145,29 @@ Q6:[
 "Fresh","Herbal","Light","Bold","Strong",
 "Crunchy","Crispy","Soft","Juicy","Saucy",
 "Fruity Drinks","Citrus Drinks","Sweet Drinks","Bitter Drinks","Creamy Drinks"
+],
+
+Q7:[
+"Ketchup","Mustard","Yellow Mustard","Dijon Mustard","Honey Mustard",
+"BBQ Sauce","Honey BBQ","Sweet BBQ","Smoky BBQ","Spicy BBQ",
+"Ranch","Spicy Ranch","Garlic Ranch","Chipotle Ranch",
+"Buffalo Sauce","Mild Buffalo","Hot Buffalo",
+"Hot Sauce","Louisiana Hot Sauce","Sriracha","Chili Sauce",
+"Mayo","Spicy Mayo","Garlic Aioli","Chipotle Aioli",
+"Thousand Island","Special Sauce",
+"Cheese Sauce","Nacho Cheese","Queso",
+"Gravy","Brown Gravy","White Gravy",
+"Sweet & Sour Sauce","Teriyaki Sauce","Soy Sauce","Ponzu",
+"Sweet Chili Sauce","Thai Chili Sauce",
+"Marinara Sauce","Pizza Sauce",
+"Tartar Sauce","Cocktail Sauce",
+"Honey","Maple Syrup",
+"Blue Cheese Dressing",
+"Avocado Sauce","Guacamole",
+"Jalapeño Sauce",
+"Zesty Sauce","Signature Sauce","House Sauce",
+"Vinegar","Malt Vinegar",
+"Peanut Sauce","Curry Sauce"
 ]
 
 };
